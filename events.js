@@ -34,16 +34,15 @@ function coords(event){
     document.getElementById('prueba').innerHTML = "X coords: " + x + ", Y coords: " + y;
 }
 */
+/*4-5
 //shift 16
 //ctrl 17
-var color = '';
-document.addEventListener("keydown", tecla);
-document.addEventListener("keyup", notecla);
-function createTabla(tamaño) {
+function createTabla(tamaño){
     let tabla = document.createElement('table');
     tabla.id = 'tabla';
     for (let i=0; i<tamaño; i++) {
 		let tr = tabla.insertRow();
+        tr.addEventListener("click",borraLinea)
 		for (let j=0;j<tamaño; j++){
             let td = tr.insertCell();
             td.addEventListener("mouseover", dibuja);
@@ -51,22 +50,93 @@ function createTabla(tamaño) {
     }
     document.body.appendChild(tabla);
 }
-function notecla(){
-    color = '';
+function borraTodo(e){
+    let tabla = document.getElementById('tabla');
+    for (fila of tabla.rows){
+        for (cas of fila.cells){
+            cas.style.backgroundColor='';
+        }
+    }
 }
-function tecla(e){
-    switch (e.keyCode){
-        case 16:
-            color = 'blue';
-            break;
-        case 17:
-            color = 'red';
-            break;
+function borraLinea(e){
+    if(e.button==0){
+        for (etd of e.currentTarget.cells){
+            etd.style.backgroundColor='';
+        }
     }
 }
 function dibuja(e){
-    e.currentTarget.style.backgroundColor = color;
+    if (e.ctrlKey){
+        e.currentTarget.style.backgroundColor = 'red';
+    }else if (e.shiftKey){
+        e.currentTarget.style.backgroundColor = 'blue';
+    }else{
+        e.currentTarget.style.backgroundColor = '';
+    } 
 }
 window.onload = function(){
     createTabla(100);
+}*/
+function posicion(event){
+    var x = event.clientX - offsetX;     // Get the horizontal coordinate
+    var y = event.clientY - offsetY;     // Get the vertical coordinate
+    if (a){
+        mover(x,y);
+    }
 }
+function mover(x,y){
+    img.style.left = x+'px';
+    img.style.top = y+'px';
+}
+function activarDown(e){
+    e.preventDefault();
+    offsetX = e.offsetX;
+    offsetY = e.offsetY;
+    a=true;
+}
+function desactivar(){
+    a=false;
+}
+var offsetX;
+var offsetY;
+var img;
+var a;
+window.onload = function(){
+    img = document.images[0];
+    img.addEventListener("mousedown", activarDown, false);
+    document.addEventListener("mousemove",posicion, false);
+    img.addEventListener("mouseup", desactivar, false);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
