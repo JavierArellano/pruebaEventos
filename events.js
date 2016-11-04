@@ -85,13 +85,14 @@ function posicion(event){
     }
 }
 function mover(x,y){
-    img.style.left = x+'px';
-    img.style.top = y+'px';
+    document.getElementById(id).style.left = x+'px';
+    document.getElementById(id).style.top = y+'px';
 }
 function activarDown(e){
     e.preventDefault();
     offsetX = e.offsetX;
     offsetY = e.offsetY;
+    id = e.target.id;
     a=true;
 }
 function desactivar(){
@@ -99,13 +100,14 @@ function desactivar(){
 }
 var offsetX;
 var offsetY;
-var img;
 var a;
+var id;
 window.onload = function(){
-    img = document.images[0];
-    img.addEventListener("mousedown", activarDown, false);
+    for (img of document.images){
+        img.addEventListener("mousedown", activarDown, false);
+        img.addEventListener("mouseup", desactivar, false);
+    }
     document.addEventListener("mousemove",posicion, false);
-    img.addEventListener("mouseup", desactivar, false);
 }
 
 
